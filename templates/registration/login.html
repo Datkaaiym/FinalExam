@@ -1,0 +1,28 @@
+{% if form.errors %}
+<p>Ваше имя пользователя и пароль не совпадают. Попробуйте снова.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated  %}
+    <p>Ваша учетная запись не имеит доступа к этой странице. 
+    Продолжить     </p>
+    {% else %}
+        Пожалуйста, войдите чтобы увидеть страницу.
+    {% endif %}
+{% endif %}
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div>
+        <td>{{form.username.label_tag}}</td>
+        <td>{{form.username}}</td>
+    </div>
+    <div>
+        <td>{{form.password.label_tag}}</td>
+        <td>{{form.password}}</td>
+    </div>
+    <div>
+        <input type="submit" value="login">
+        <input type="hidden" name="next" value="{{next}}">
+    </div>
+</form>
+<p><a href="{% url 'password_reset' %}">Забыли Пароль? Вам сюда.</a></p>
